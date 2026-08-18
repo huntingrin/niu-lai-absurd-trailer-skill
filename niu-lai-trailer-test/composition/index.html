@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>抱住地球</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "NiuLaiCJK"; src: local("PingFang SC"), local("Microsoft YaHei"); }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #050505; }
+      body { font-family: "NiuLaiCJK", system-ui, sans-serif; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #050505; }
+      .clip { position: absolute; inset: 0; }
+      .scene { width: 1080px; height: 1920px; object-fit: cover; background: #050505; z-index: 0; }
+      .title-image { width: 1088px; height: 1928px; left: -4px; top: -4px; object-fit: cover; filter: contrast(1.18) saturate(0.8) brightness(0.42); z-index: 0; }
+      .vignette { pointer-events: none; z-index: 1; background: linear-gradient(to bottom, rgba(0,0,0,.2), transparent 28%, transparent 62%, rgba(0,0,0,.72)); }
+      .scanlines { pointer-events: none; z-index: 2; opacity: .12; background: repeating-linear-gradient(to bottom, transparent 0, transparent 5px, rgba(0,0,0,.55) 6px); }
+      .caption-wrap { display: flex; align-items: flex-end; justify-content: center; padding: 0 74px 260px; z-index: 5; }
+      .caption { width: 100%; color: #fff; font-weight: 900; font-size: 66px; line-height: 1.18; letter-spacing: 0; text-align: center; text-shadow: 0 5px 0 #111, 4px 0 0 #111, -4px 0 0 #111; }
+      .caption span, h1 span, .tagline span { display: block; }
+      .caption strong { color: #ffd633; font-weight: 900; }
+      .emergency { display: flex; align-items: flex-start; justify-content: center; padding-top: 126px; z-index: 5; }
+      .stamp { border: 12px solid #e21f26; color: #fff; background: rgba(132,0,0,.84); padding: 18px 34px; font-size: 52px; font-weight: 900; line-height: 1; box-shadow: 10px 10px 0 #ffd633; }
+      .title-card { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 150px 72px 120px; text-align: center; z-index: 5; }
+      .kicker { color: #ffd633; font-size: 38px; font-weight: 800; letter-spacing: 0; margin-bottom: 24px; }
+      h1 { margin: 0; color: #fff; font-size: 142px; line-height: 1.02; letter-spacing: 0; font-weight: 1000; text-shadow: 8px 8px 0 #d51f26, 14px 14px 0 #111; }
+      .tagline { margin-top: 42px; max-width: 850px; color: #fff; font-size: 50px; line-height: 1.3; font-weight: 800; text-shadow: 0 4px 0 #111; }
+      .release { margin-top: 74px; padding: 16px 30px; background: #ffd633; color: #111; font-size: 34px; font-weight: 900; }
+      .bars { pointer-events: none; z-index: 3; background: linear-gradient(165deg, transparent 0 55%, rgba(213,31,38,.88) 55% 61%, transparent 61% 65%, rgba(255,214,51,.9) 65% 69%, transparent 69%); }
+      .blackout { background: #000; z-index: 9; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920">
+      <video id="scene1" class="clip scene" src="assets/scene1.mp4" data-start="0" data-duration="4" data-track-index="0" muted playsinline></video>
+      <video id="scene2" class="clip scene" src="assets/scene2.mp4" data-start="4" data-duration="4" data-track-index="0" muted playsinline></video>
+      <video id="scene3" class="clip scene" src="assets/scene3.mp4" data-start="8" data-duration="4" data-track-index="0" muted playsinline></video>
+      <img id="title-bg" class="clip title-image" src="assets/base.png" data-start="12" data-duration="3" data-track-index="0" alt="牛来抱着蓝色鱼玩偶" />
+
+      <div id="cap1" class="clip caption-wrap" data-start="0" data-duration="4" data-track-index="5"><div class="caption"><span>牛来只是想</span><strong>抱紧一条鱼</strong></div></div>
+      <div id="alert" class="clip emergency" data-start="4" data-duration="4" data-track-index="5"><div class="stamp">国家级拥鱼警报</div></div>
+      <div id="cap2" class="clip caption-wrap" data-start="4" data-duration="4" data-track-index="6"><div class="caption"><span>全国海陆平衡</span><strong>正在失去控制</strong></div></div>
+      <div id="cap3" class="clip caption-wrap" data-start="8" data-duration="4" data-track-index="5"><div class="caption"><span>唯一的证据</span><strong>已被举起</strong></div></div>
+
+      <div id="title-card" class="clip title-card" data-start="12" data-duration="3" data-track-index="5">
+        <div id="kicker" class="kicker">国家海陆平衡委员会 · 重点推荐</div>
+        <h1 id="main-title"><span>抱住</span><span>地球</span></h1>
+        <div id="tagline" class="tagline"><span>他抱的不是鱼</span><span>是文明最后的浮力</span></div>
+        <div id="release" class="release">暑期严肃上映</div>
+      </div>
+
+      <div id="vignette-overlay" class="clip vignette" data-start="0" data-duration="15" data-track-index="1"></div>
+      <div id="scanline-overlay" class="clip scanlines" data-start="0" data-duration="15" data-track-index="2"></div>
+      <div id="title-bars" class="clip bars" data-start="12" data-duration="3" data-track-index="3"></div>
+      <div id="cut-black-1" class="clip blackout" data-start="3.92" data-duration="0.12" data-track-index="9"></div>
+      <div id="cut-black-2" class="clip blackout" data-start="7.92" data-duration="0.12" data-track-index="9"></div>
+      <div id="cut-black-3" class="clip blackout" data-start="11.88" data-duration="0.16" data-track-index="9"></div>
+      <audio id="master-audio" src="assets/mix.m4a" data-start="0" data-duration="15" data-track-index="10" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#cap1 .caption", { y: 80, opacity: 0, duration: 0.35, ease: "power3.out" }, 0.18);
+      tl.from("#alert .stamp", { scale: 2.2, opacity: 0, rotation: 8, duration: 0.28, ease: "power4.out" }, 4.08);
+      tl.from("#cap2 .caption", { y: 90, opacity: 0, duration: 0.3, ease: "power3.out" }, 4.32);
+      tl.from("#cap3 .caption", { scale: 1.5, opacity: 0, duration: 0.32, ease: "power4.out" }, 8.2);
+      tl.from("#main-title", { scale: 2.4, opacity: 0, duration: 0.3, ease: "power4.out" }, 12.04);
+      tl.from("#kicker", { y: -36, opacity: 0, duration: 0.28, ease: "power2.out" }, 12.24);
+      tl.from("#tagline", { y: 46, opacity: 0, duration: 0.32, ease: "power3.out" }, 12.48);
+      tl.from("#release", { scaleX: 0, opacity: 0, duration: 0.26, ease: "power2.out" }, 12.82);
+      tl.to("#title-bg", { scale: 1.06, duration: 3, ease: "none" }, 12);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
